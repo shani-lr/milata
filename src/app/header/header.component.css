@@ -1,0 +1,12 @@
+li.nav-item.active:focus {
+  outline: none;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding: 0.5rem 1rem;
+}
+
+a.nav-link:hover {
+  background-color: #a82525;
+  border-radius: 20px;
+}

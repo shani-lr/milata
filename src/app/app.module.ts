@@ -10,22 +10,32 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment.prod';
 import { WordOfWeekComponent } from './word-of-week/word-of-week.component';
 import { DataService } from './data.service';
+import { AdministrationComponent } from './administration/administration.component';
+import { RoutingModule } from './routing.module';
+import { AuthService } from './auth.service';
+import { AdminGuard } from './administration/admin-guard.service';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    WordOfWeekComponent
+    WordOfWeekComponent,
+    AdministrationComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RoutingModule,
+    FormsModule
   ],
   providers: [
-    DataService
+    DataService,
+    AuthService,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })

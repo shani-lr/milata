@@ -14,4 +14,8 @@ export class DataService {
     return this.app.valueChanges().map((data: { weekly: string }) => data.weekly);
   }
 
+  updateWordOfWeek(word: string): Observable<void> {
+    return Observable.from(this.app.update({ weekly: word }));
+  }
+
 }
