@@ -9,17 +9,19 @@ import { DataService } from '../data.service';
 export class AdministrationComponent implements OnInit {
 
   word = '';
+  meaning = '';
   hasPublished = false;
 
-  constructor(private dataServie: DataService) {
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
   }
 
   onPublish() {
-    this.dataServie.updateWordOfWeek(this.word).subscribe(() => {
+    this.dataService.updateWordOfWeek(this.word, this.meaning).subscribe(() => {
         this.word = '';
+        this.meaning = '';
         this.hasPublished = true;
       }
     );

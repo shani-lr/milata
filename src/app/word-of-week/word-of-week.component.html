@@ -1,3 +1,8 @@
-<div style="font-size: 6rem">
-  {{ word$ | async }}
+<div>
+  <div style="font-size: 6rem">
+    {{ (weekly$ | async)?.word }}
+  </div>
+  <div>
+    {{ (weekly$ | async)?.meaning }}
+  </div>
 </div>

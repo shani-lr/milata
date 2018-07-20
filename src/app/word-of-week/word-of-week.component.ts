@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs/Observable';
+import { Weekly } from '../weekly.model';
 
 @Component({
   selector: 'app-word-of-week',
@@ -8,12 +9,12 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./word-of-week.component.css']
 })
 export class WordOfWeekComponent implements OnInit {
-  private word$: Observable<string>;
+  private weekly$: Observable<Weekly>;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.word$ = this.dataService.getWordOfTheWeek();
+    this.weekly$ = this.dataService.getWordOfTheWeek();
   }
 
 }
