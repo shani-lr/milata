@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private isLoggedIn$: Observable<boolean>;
-  private isAdmin$: Observable<boolean>;
+  isLoggedIn$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
 
   constructor(private authService: AuthService,
               private router: Router) { }

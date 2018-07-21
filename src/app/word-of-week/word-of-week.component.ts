@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs/Observable';
 import { Weekly } from '../weekly.model';
 
 @Component({
@@ -8,13 +8,34 @@ import { Weekly } from '../weekly.model';
   templateUrl: './word-of-week.component.html',
   styleUrls: ['./word-of-week.component.css']
 })
-export class WordOfWeekComponent implements OnInit {
-  private weekly$: Observable<Weekly>;
+export class WordOfWeekComponent implements OnInit, OnDestroy {
+  weekly: Weekly;
+  hasVoted = false;
+  results = [];
+  private subscriptions = [];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    this.weekly$ = this.dataService.getWordOfTheWeek();
+    this.subscriptions.push(
+      this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
+        this.weekly = weekly;
+        if (this.weekly) {
+          this.results = [{ name: 'אהבתי', value: this.weekly.like}, { name: 'לא אהבתי', value: this.weekly.dislike }]
+        }
+      })
+    );
   }
 
+  vote(like: boolean) {
+    this.subscriptions.push(
+      this.dataService.updateWordOfWeekVotes(like).subscribe(() => {
+        this.hasVoted = true;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.map(sub => sub.unsubscribe());
+  }
 }

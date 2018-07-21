@@ -27,4 +27,22 @@ export class DataService {
     ));
   }
 
+  updateWordOfWeekVotes(like: boolean) {
+    const appRef = this.db.firestore.collection('app').doc('words');
+    return Observable.from(this.db.firestore.runTransaction((transaction) => {
+      return transaction.get(appRef).then(
+        (app) => {
+          let weekly: Weekly = app.data().weekly;
+          if (like) {
+            weekly.like = weekly.like + 1;
+          } else {
+            weekly.dislike = weekly.dislike + 1;
+          }
+
+          transaction.update(appRef, {weekly: weekly});
+        }
+      );
+    }));
+  }
+
 }

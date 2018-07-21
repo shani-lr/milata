@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,6 +15,8 @@ import { AdministrationComponent } from './administration/administration.compone
 import { RoutingModule } from './routing.module';
 import { AuthService } from './auth.service';
 import { AdminGuard } from './administration/admin-guard.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { AdminGuard } from './administration/admin-guard.service';
     AngularFireAuthModule,
     RoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule
   ],
   providers: [
     DataService,
