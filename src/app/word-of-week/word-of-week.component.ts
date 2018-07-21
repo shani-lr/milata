@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { DataService } from '../data.service';
 import { Weekly } from '../weekly.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-word-of-week',
@@ -14,7 +15,8 @@ export class WordOfWeekComponent implements OnInit, OnDestroy {
   results = [];
   private subscriptions = [];
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService,
+              private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.subscriptions.push(
@@ -28,9 +30,11 @@ export class WordOfWeekComponent implements OnInit, OnDestroy {
   }
 
   vote(like: boolean) {
+    this.spinner.show();
     this.subscriptions.push(
       this.dataService.updateWordOfWeekVotes(like).subscribe(() => {
         this.hasVoted = true;
+        this.spinner.hide();
       })
     );
   }

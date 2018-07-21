@@ -17,7 +17,7 @@ import { AuthService } from './auth.service';
 import { AdminGuard } from './administration/admin-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     NgxChartsModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxSpinnerModule
   ],
   providers: [
     DataService,
