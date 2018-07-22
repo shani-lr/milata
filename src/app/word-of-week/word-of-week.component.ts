@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { DataService } from '../data.service';
 import { Weekly } from '../weekly.model';
@@ -9,7 +9,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './word-of-week.component.html',
   styleUrls: ['./word-of-week.component.css']
 })
-export class WordOfWeekComponent implements OnInit, OnDestroy {
+export class WordOfWeekComponent implements OnInit, OnDestroy  {
+  @Input() isHistoryMode: boolean;
+  @Input() oldWeeklyIndex: number;
+  @Input() showResults: boolean;
+
   weekly: Weekly;
   hasVoted = false;
   private subscriptions = [];
@@ -18,21 +22,39 @@ export class WordOfWeekComponent implements OnInit, OnDestroy {
               private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
-        this.weekly = weekly;
-      })
-    );
+    if (!this.isHistoryMode) {
+      this.subscriptions.push(
+        this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
+          this.weekly = weekly;
+        })
+      );
+    } else {
+      this.subscriptions.push(
+        this.dataService.getHistory().subscribe((history: Weekly[]) => {
+          this.weekly = history[this.oldWeeklyIndex];
+        })
+      );
+    }
   }
 
   vote(like: boolean) {
     this.spinner.show();
-    this.subscriptions.push(
-      this.dataService.updateWordOfWeekVotes(like).subscribe(() => {
-        this.hasVoted = true;
-        this.spinner.hide();
-      })
-    );
+
+    if (!this.isHistoryMode) {
+      this.subscriptions.push(
+        this.dataService.updateWordOfWeekVotes(like).subscribe(() => {
+          this.hasVoted = true;
+          this.spinner.hide();
+        })
+      );
+    } else {
+      this.subscriptions.push(
+        this.dataService.updateOldWordOfWeekVotes(this.weekly, like).subscribe(() => {
+          this.hasVoted = true;
+          this.spinner.hide();
+        })
+      );
+    }
   }
 
   ngOnDestroy() {

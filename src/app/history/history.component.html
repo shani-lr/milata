@@ -1,0 +1,22 @@
+<div *ngIf="!weeklySelected; else showWord" class="row">
+  <div *ngFor="let weekly of history; let i = index" class="col">
+    <button class="btn btn-link" (click)="onSelectWeekly(i)">{{weekly.word}}</button>
+  </div>
+</div>
+<ng-template #showWord>
+  <app-word-of-week
+    [isHistoryMode]="true"
+    [oldWeeklyIndex]="selectedWeeklyIndex"
+    [showResults]="showResults">
+  </app-word-of-week>
+  <div class="row">
+    <div *ngIf="!showResults" class="col">
+      <button class="btn btn-outline-secondary" (click)="onShowResults()" style="margin: 3rem 0 1rem"><i class="fas fa-eye"></i> לצפייה בתוצאות</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-outline-success" (click)="onBack()" style="margin-bottom: 1rem"><i class="fas fa-arrow-right"></i> לחזרה</button>
+    </div>
+  </div>
+</ng-template>

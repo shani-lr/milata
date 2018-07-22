@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ResultsComponent } from './results/results.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ResultsComponent } from './results/results.component';
     HeaderComponent,
     WordOfWeekComponent,
     AdministrationComponent,
-    ResultsComponent
+    ResultsComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

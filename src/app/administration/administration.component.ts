@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-administration',
@@ -13,15 +14,18 @@ export class AdministrationComponent implements OnDestroy {
   hasPublished = false;
   private subscriptions$ = [];
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,
+              private spinner: NgxSpinnerService) {
   }
 
   onPublish() {
+    this.spinner.show();
     this.subscriptions$.push(
       this.dataService.updateWordOfWeek(this.word, this.meaning).subscribe(() => {
           this.word = '';
           this.meaning = '';
           this.hasPublished = true;
+          this.spinner.hide();
         }
       ));
   }
