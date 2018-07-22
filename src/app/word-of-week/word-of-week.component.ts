@@ -23,7 +23,7 @@ export class WordOfWeekComponent implements OnInit, OnDestroy {
       this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
         this.weekly = weekly;
         if (this.weekly) {
-          this.results = [{ name: 'אהבתי', value: this.weekly.like}, { name: 'לא אהבתי', value: this.weekly.dislike }]
+          this.results = [{ name: 'שימושי', value: this.weekly.like}, { name: 'מיותר', value: this.weekly.dislike }]
         }
       })
     );
