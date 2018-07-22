@@ -1,0 +1,19 @@
+<div *ngIf="weekly">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <ngx-charts-pie-chart
+      [view]="[500, 350]"
+      [results]="results"
+      [scheme]="{domain: ['#2C83C9', '#FAC51D']}"
+      [labels]="true"
+      [doughnut]="true"
+      [arcWidth]="0.5"
+      [trimLabels]="false">
+    </ngx-charts-pie-chart>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span><strong>מספר המצביעים: </strong></span>
+      <span>{{ weekly.like + weekly.dislike }}</span>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class WordOfWeekComponent implements OnInit, OnDestroy {
   weekly: Weekly;
   hasVoted = false;
-  results = [];
   private subscriptions = [];
 
   constructor(private dataService: DataService,
@@ -22,9 +21,6 @@ export class WordOfWeekComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
         this.weekly = weekly;
-        if (this.weekly) {
-          this.results = [{ name: 'שימושי', value: this.weekly.like}, { name: 'מיותר', value: this.weekly.dislike }]
-        }
       })
     );
   }

@@ -22,27 +22,17 @@
   <div *ngIf="!hasVoted; else showResults" class="row" style=" margin-top: 2rem;">
     <div class="col">
       <button (click)="vote(true)" class="btn btn-lg btn-primary" style="margin-left: 2rem">
-        <i class="fas fa-thumbs-up"></i> שימושי
+        <div style="font-size: 1.8rem">
+          <i class="fas fa-thumbs-up"></i> אימצתי!
+        </div>
       </button>
       <button (click)="vote(false)" class="btn btn-lg btn-warning">
-        <i class="fas fa-thumbs-down"></i> מיותר
+        <div style="font-size: 1rem">לא אשתמש </div>
+        <div style="font-size: 0.8rem">אבל אתה מלך <i class="fas fa-crown"></i></div>
       </button>
     </div>
   </div>
   <ng-template #showResults>
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <ngx-charts-pie-chart
-        [view]="[500, 350]"
-        [results]="results"
-        [scheme]="{domain: ['#2C83C9', '#FAC51D']}"
-      [labels]="true" [doughnut]="true" [arcWidth]="0.5">
-      </ngx-charts-pie-chart>
-    </div>
-    <div class="row">
-      <div class="col">
-        <span><strong>מספר המצביעים: </strong></span>
-        <span>{{ weekly.like + weekly.dislike }}</span>
-      </div>
-    </div>
+    <app-results></app-results>
   </ng-template>
 </div>

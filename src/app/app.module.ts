@@ -18,13 +18,15 @@ import { AdminGuard } from './administration/admin-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     WordOfWeekComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
