@@ -11,6 +11,8 @@ export class AdministrationComponent implements OnDestroy {
 
   word = '';
   meaning = '';
+  title = '';
+  description = '';
   hasPublished = false;
   private subscriptions$ = [];
 
@@ -24,6 +26,18 @@ export class AdministrationComponent implements OnDestroy {
       this.dataService.updateWordOfWeek(this.word, this.meaning).subscribe(() => {
           this.word = '';
           this.meaning = '';
+          this.hasPublished = true;
+          this.spinner.hide();
+        }
+      ));
+  }
+
+  onPublishFact() {
+    this.spinner.show();
+    this.subscriptions$.push(
+      this.dataService.updateFunFacts(this.title, this.description).subscribe(() => {
+          this.title = '';
+          this.description = '';
           this.hasPublished = true;
           this.spinner.hide();
         }

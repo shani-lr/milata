@@ -20,6 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ResultsComponent } from './results/results.component';
 import { HistoryComponent } from './history/history.component';
+import { FunFactsComponent } from './fun-facts/fun-facts.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HistoryComponent } from './history/history.component';
     WordOfWeekComponent,
     AdministrationComponent,
     ResultsComponent,
-    HistoryComponent
+    HistoryComponent,
+    FunFactsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
+
 import { Weekly } from './weekly.model';
 import { Words } from './words.model';
+import { FunFact } from './fun-fact.model';
 
 @Injectable()
 export class DataService {
   private words$: AngularFirestoreDocument<Words>;
+  private funFacts$: AngularFirestoreDocument<{ facts: FunFact[] }>;
 
   constructor(private db: AngularFirestore) {
-    this.words$ = this.db.collection('app').doc<Words>('words-test');
+    this.words$ = this.db.collection('app').doc<Words>('words');
+    this.funFacts$ = this.db.collection('app').doc('fun-facts');
   }
 
   getWordOfTheWeek(): Observable<Weekly> {
@@ -20,9 +24,13 @@ export class DataService {
     return this.words$.valueChanges().map((data: Words) => data.history);
   }
 
+  getFunFacts(): Observable<FunFact[]> {
+    return this.funFacts$.valueChanges().map((data: { facts: FunFact[] }) => data.facts);
+  }
+
   updateWordOfWeek(word: string, meaning: string) {
     const wordsRef$ =
-      this.db.firestore.collection('app').doc('words-test');
+      this.db.firestore.collection('app').doc('words');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
@@ -47,7 +55,7 @@ export class DataService {
 
   updateWordOfWeekVotes(like: boolean) {
     const wordsRef$ =
-      this.db.firestore.collection('app').doc('words-test');
+      this.db.firestore.collection('app').doc('words');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
@@ -67,7 +75,7 @@ export class DataService {
 
   updateOldWordOfWeekVotes(weekly: Weekly, like: boolean) {
     const wordsRef$ =
-      this.db.firestore.collection('app').doc('words-test');
+      this.db.firestore.collection('app').doc('words');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
@@ -82,6 +90,25 @@ export class DataService {
           }
 
           transaction.update(wordsRef$, {history: history});
+        }
+      );
+    }));
+  }
+
+  updateFunFacts(title: string, description: string) {
+    const factsRef$ =
+      this.db.firestore.collection('app').doc('fun-facts');
+
+    return Observable.from(this.db.firestore.runTransaction((transaction) => {
+      return transaction.get(factsRef$).then(
+        (factsData) => {
+          let facts: FunFact[] = factsData.data().facts;
+          let updatedFacts: { facts: FunFact[] } = {
+            facts: facts && facts.length ?
+              [...facts, { title: title, description: description }] :
+              [{ title: title, description: description }]
+          };
+          transaction.update(factsRef$, JSON.parse(JSON.stringify(updatedFacts)));
         }
       );
     }));

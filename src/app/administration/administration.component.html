@@ -8,7 +8,7 @@
   <div class="row" *ngIf="hasPublished" style="margin-top: 2rem">
     <div class="col">
       <div class="alert alert-success" role="alert">
-        מילת השבוע פורסמה בהצלחה!
+        הפעולה בוצעה בהצלחה!
       </div>
     </div>
   </div>
@@ -36,9 +36,39 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" style="margin-bottom: 4rem">
     <div class="col">
-      <div class="btn btn-primary" (click)="onPublish()">פרסם</div>
+      <div class="btn btn-primary" (click)="onPublish()">פרסם את מילת השבוע</div>
+    </div>
+  </div>
+<hr style="border: 1px dashed;">
+  <div class="row" style="margin-top: 4rem">
+    <div class="col">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" style="border-radius: 0">הידעת?</span>
+        </div>
+        <input [(ngModel)]="title"
+               type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+               style="border-radius: 0">
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 2rem">
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" style="border-radius: 0">פירוט</span>
+        </div>
+        <input [(ngModel)]="description"
+               type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-default"
+               style="border-radius: 0">
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 2rem">
+    <div class="col">
+      <div class="btn btn-primary" (click)="onPublishFact()">פרסם הידעת</div>
     </div>
   </div>
 </div>
