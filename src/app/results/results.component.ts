@@ -12,7 +12,9 @@ export class ResultsComponent implements OnInit, OnChanges {
   @Input() oldWeekly: Weekly;
 
   weekly: Weekly;
-  results: { name: string; value: number }[] = [];
+  results: number[] = [];
+  labels: string[] = ['אימצתי!', 'לא אשתמש אבל אתה מלך'];
+  colors = [{ backgroundColor: ['#2C83C9', '#FAC51D']}];
   private subscriptions = [];
 
   constructor(private dataService: DataService) { }
@@ -23,20 +25,20 @@ export class ResultsComponent implements OnInit, OnChanges {
         this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
           this.weekly = weekly;
           if (this.weekly) {
-            this.results = [{ name: 'אימצתי!', value: this.weekly.like}, { name: 'לא אשתמש אבל אתה מלך', value: this.weekly.dislike }]
+            this.results = [ this.weekly.like, this.weekly.dislike ]
           }
         })
       );
     } else {
       this.weekly = this.oldWeekly;
-      this.results = [{ name: 'אימצתי!', value: this.weekly.like}, { name: 'לא אשתמש אבל אתה מלך', value: this.weekly.dislike }];
+      this.results = [ this.weekly.like, this.weekly.dislike ]
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.oldWeekly && changes.oldWeekly.currentValue) {
       this.weekly = this.oldWeekly;
-      this.results = [{ name: 'אימצתי!', value: this.weekly.like}, { name: 'לא אשתמש אבל אתה מלך', value: this.weekly.dislike }];
+      this.results = [ this.weekly.like, this.weekly.dislike ]
     }
   }
 

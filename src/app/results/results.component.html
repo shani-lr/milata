@@ -1,17 +1,16 @@
-<div *ngIf="weekly" style="margin-bottom: 1rem;">
+<div *ngIf="weekly" style="margin-bottom: 1rem; margin-top: 1rem">
   <div fxLayout="row" fxLayoutAlign="center center">
-    <ngx-charts-pie-chart
-      [view]="[500, 350]"
-      [results]="results"
-      [scheme]="{domain: ['#2C83C9', '#FAC51D']}"
-      [labels]="true"
-      [doughnut]="true"
-      [arcWidth]="0.5"
-      [trimLabels]="false">
-    </ngx-charts-pie-chart>
+    <div style="display: block">
+      <canvas baseChart
+              [data]="results"
+              [labels]="labels"
+              [chartType]="'doughnut'"
+      [colors]="colors">
+      </canvas>
+    </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col" style="font-size: 0.7rem; margin-top: 1rem">
       <span><strong>מספר המצביעים: </strong></span>
       <span>{{ weekly.like + weekly.dislike }}</span>
     </div>

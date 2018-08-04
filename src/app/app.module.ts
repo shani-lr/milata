@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ChartsModule } from 'ng4-charts';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,9 +18,6 @@ import { AdministrationComponent } from './administration/administration.compone
 import { RoutingModule } from './routing.module';
 import { AuthService } from './auth.service';
 import { AdminGuard } from './administration/admin-guard.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { ResultsComponent } from './results/results.component';
 import { HistoryComponent } from './history/history.component';
 import { FunFactsComponent } from './fun-facts/fun-facts.component';
@@ -39,10 +39,10 @@ import { FunFactsComponent } from './fun-facts/fun-facts.component';
     AngularFireAuthModule,
     RoutingModule,
     FormsModule,
-    NgxChartsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ChartsModule
   ],
   providers: [
     DataService,

@@ -9,8 +9,8 @@ import { FunFact } from '../fun-fact.model';
 })
 export class FunFactsComponent implements OnInit {
 
+  funFacts: FunFact[];
   private subscriptions = [];
-  private funFacts: FunFact[];
 
   constructor(private dataService: DataService) { }
 

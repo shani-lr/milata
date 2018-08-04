@@ -105,7 +105,7 @@ export class DataService {
           let facts: FunFact[] = factsData.data().facts;
           let updatedFacts: { facts: FunFact[] } = {
             facts: facts && facts.length ?
-              [...facts, { title: title, description: description }] :
+              [{ title: title, description: description }, ...facts] :
               [{ title: title, description: description }]
           };
           transaction.update(factsRef$, JSON.parse(JSON.stringify(updatedFacts)));
