@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Weekly } from '../weekly.model';
+import { Weekly } from '../models/weekly.model';
 import { DataService } from '../data.service';
 
 @ Component({

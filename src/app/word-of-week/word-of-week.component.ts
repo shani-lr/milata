@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { DataService } from '../data.service';
-import { Weekly } from '../weekly.model';
+import { Weekly } from '../models/weekly.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({

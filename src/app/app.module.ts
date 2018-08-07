@@ -15,12 +15,13 @@ import { environment } from '../environments/environment.prod';
 import { WordOfWeekComponent } from './word-of-week/word-of-week.component';
 import { DataService } from './data.service';
 import { AdministrationComponent } from './administration/administration.component';
-import { RoutingModule } from './routing.module';
+import { RoutingModule } from './models/routing.module';
 import { AuthService } from './auth.service';
 import { AdminGuard } from './administration/admin-guard.service';
 import { ResultsComponent } from './results/results.component';
 import { HistoryComponent } from './history/history.component';
 import { FunFactsComponent } from './fun-facts/fun-facts.component';
+import { QuestionsComponent } from './questions/questions.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FunFactsComponent } from './fun-facts/fun-facts.component';
     AdministrationComponent,
     ResultsComponent,
     HistoryComponent,
-    FunFactsComponent
+    FunFactsComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,

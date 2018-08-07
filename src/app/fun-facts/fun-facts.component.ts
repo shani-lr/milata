@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { FunFact } from '../fun-fact.model';
+import { FunFact } from '../models/fun-fact.model';
 
 @Component({
   selector: 'app-fun-facts',

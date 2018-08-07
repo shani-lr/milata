@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 
-import { Weekly } from './weekly.model';
-import { Words } from './words.model';
-import { FunFact } from './fun-fact.model';
+import { Weekly } from './models/weekly.model';
+import { Words } from './models/words.model';
+import { FunFact } from './models/fun-fact.model';
+import { Question } from './models/question.model';
 
 @Injectable()
 export class DataService {
   private words$: AngularFirestoreDocument<Words>;
   private funFacts$: AngularFirestoreDocument<{ facts: FunFact[] }>;
+  private questions$: AngularFirestoreDocument<{ questions: Question[] }>;
 
   constructor(private db: AngularFirestore) {
     this.words$ = this.db.collection('app').doc<Words>('words');
     this.funFacts$ = this.db.collection('app').doc('fun-facts');
+    this.questions$ = this.db.collection('app').doc('questions');
   }
 
   getWordOfTheWeek(): Observable<Weekly> {
@@ -26,6 +29,10 @@ export class DataService {
 
   getFunFacts(): Observable<FunFact[]> {
     return this.funFacts$.valueChanges().map((data: { facts: FunFact[] }) => data.facts);
+  }
+
+  getQuestions(): Observable<Question[]> {
+    return this.questions$.valueChanges().map((data: { questions: Question[] }) => data.questions);
   }
 
   updateWordOfWeek(word: string, meaning: string) {
@@ -105,10 +112,65 @@ export class DataService {
           let facts: FunFact[] = factsData.data().facts;
           let updatedFacts: { facts: FunFact[] } = {
             facts: facts && facts.length ?
-              [{ title: title, description: description }, ...facts] :
-              [{ title: title, description: description }]
+              [{title: title, description: description}, ...facts] :
+              [{title: title, description: description}]
           };
           transaction.update(factsRef$, JSON.parse(JSON.stringify(updatedFacts)));
+        }
+      );
+    }));
+  }
+
+  updateQuestionsWithNewQuestion(question: string, username: string) {
+    const questionsRef$ =
+      this.db.firestore.collection('app').doc('questions');
+
+    return Observable.from(this.db.firestore.runTransaction((transaction) => {
+      return transaction.get(questionsRef$).then(
+        (questionsData) => {
+          let questions: Question[] = questionsData.data().questions;
+          let updatedQuestions: { questions: Question[] } = {
+            questions: questions && questions.length ?
+              [{question: question, answer: '', username: username}, ...questions] :
+              [{question: question, answer: '', username: username}]
+          };
+          transaction.update(questionsRef$, JSON.parse(JSON.stringify(updatedQuestions)));
+        }
+      );
+    }));
+  }
+
+  updateQuestionsWithDeletedQuestion(question: string) {
+    const questionsRef$ =
+      this.db.firestore.collection('app').doc('questions');
+
+    return Observable.from(this.db.firestore.runTransaction((transaction) => {
+      return transaction.get(questionsRef$).then(
+        (questionsData) => {
+          let questions: Question[] = questionsData.data().questions;
+
+          let updatedQuestions: { questions: Question[] } = {
+            questions: [...questions.filter(q => q.question !== question)]
+          };
+          transaction.update(questionsRef$, JSON.parse(JSON.stringify(updatedQuestions)));
+        }
+      );
+    }));
+  }
+
+  updateQuestionsWithAnsweredQuestion(question: Question) {
+    const questionsRef$ =
+      this.db.firestore.collection('app').doc('questions');
+
+    return Observable.from(this.db.firestore.runTransaction((transaction) => {
+      return transaction.get(questionsRef$).then(
+        (questionsData) => {
+          let questions: Question[] = questionsData.data().questions;
+
+          let updatedQuestions: { questions: Question[] } = {
+            questions: [question, ...questions.filter(q => q.question !== question.question)]
+          };
+          transaction.update(questionsRef$, JSON.parse(JSON.stringify(updatedQuestions)));
         }
       );
     }));

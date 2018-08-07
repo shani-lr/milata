@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Weekly } from '../weekly.model';
+import { Weekly } from '../models/weekly.model';
 
 @Component({
   selector: 'app-history',

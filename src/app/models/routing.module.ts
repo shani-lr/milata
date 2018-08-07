@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { WordOfWeekComponent } from './word-of-week/word-of-week.component';
-import { AdministrationComponent } from './administration/administration.component';
-import { AdminGuard } from './administration/admin-guard.service';
-import { ResultsComponent } from './results/results.component';
-import { HistoryComponent } from './history/history.component';
-import { FunFactsComponent } from './fun-facts/fun-facts.component';
+import { WordOfWeekComponent } from '../word-of-week/word-of-week.component';
+import { AdministrationComponent } from '../administration/administration.component';
+import { AdminGuard } from '../administration/admin-guard.service';
+import { ResultsComponent } from '../results/results.component';
+import { HistoryComponent } from '../history/history.component';
+import { FunFactsComponent } from '../fun-facts/fun-facts.component';
+import { QuestionsComponent } from '../questions/questions.component';
 
 const appRoutes: Routes = [
   { path: '', component: WordOfWeekComponent },
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
   { path: 'results', component: ResultsComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'fun-facts', component: FunFactsComponent },
+  { path: 'questions-and-answers', component: QuestionsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
