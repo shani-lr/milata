@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 
-import { Weekly } from './models/weekly.model';
+import { HistoryItem } from './models/history-item.model';
 import { Words } from './models/words.model';
 import { FunFact } from './models/fun-fact.model';
 import { Question } from './models/question.model';
+import { Weekly } from './models/weekly';
 
 @Injectable()
 export class DataService {
@@ -23,7 +24,7 @@ export class DataService {
     return this.words$.valueChanges().map((data: Words) => data.weekly);
   }
 
-  getHistory(): Observable<Weekly[]> {
+  getHistory(): Observable<HistoryItem[]> {
     return this.words$.valueChanges().map((data: Words) => data.history);
   }
 
@@ -35,14 +36,14 @@ export class DataService {
     return this.questions$.valueChanges().map((data: { questions: Question[] }) => data.questions);
   }
 
-  updateWordOfWeek(word: string, meaning: string) {
+  updateWordOfWeek(word: string, meaning: string, options: string[], correctOption: string) {
     const wordsRef$ =
       this.db.firestore.collection('app').doc('words-test');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
         (wordsData) => {
-          let history: Weekly[] = wordsData.data().history;
+          let history: HistoryItem[] = wordsData.data().history;
           let weekly: Weekly = wordsData.data().weekly;
           let updatedApp: Words = {
             history: history && history.length ? [...history, weekly] : [weekly],
@@ -50,7 +51,11 @@ export class DataService {
               word: word,
               meaning: meaning,
               like: 0,
-              dislike: 0
+              dislike: 0,
+              options: options,
+              correctOption: correctOption,
+              wrongGuesses: 0,
+              correctGuesses: 0
             }
           };
 
@@ -80,14 +85,34 @@ export class DataService {
     }));
   }
 
-  updateOldWordOfWeekVotes(weekly: Weekly, like: boolean) {
+  updateWordOfWeekGuesses(isCorrect: boolean) {
+    const wordsRef$ =
+      this.db.firestore.collection('app').doc('words-test');
+
+    return Observable.from(this.db.firestore.runTransaction((transaction) => {
+      return transaction.get(wordsRef$).then(
+        (words) => {
+          let weekly: Weekly = words.data().weekly;
+          if (isCorrect) {
+            weekly.correctGuesses = weekly.correctGuesses ? weekly.correctGuesses + 1 : 1;
+          } else {
+            weekly.wrongGuesses = weekly.wrongGuesses ? weekly.wrongGuesses + 1 : 1;
+          }
+          transaction.update(wordsRef$, {weekly: weekly});
+        }
+      );
+    }));
+  }
+
+
+  updateOldWordOfWeekVotes(weekly: HistoryItem, like: boolean) {
     const wordsRef$ =
       this.db.firestore.collection('app').doc('words-test');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
         (wordsData) => {
-          let history: Weekly[] = wordsData.data().history;
+          let history: HistoryItem[] = wordsData.data().history;
           let index = history.findIndex(x => x.word === weekly.word);
 
           if (like) {

@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Weekly } from '../models/weekly.model';
+import { HistoryItem } from '../models/history-item.model';
 import { DataService } from '../data.service';
+import { Weekly } from '../models/weekly';
 
 @ Component({
   selector: 'app-results',
@@ -9,9 +10,9 @@ import { DataService } from '../data.service';
 })
 export class ResultsComponent implements OnInit, OnChanges {
   @Input() isHistoryMode: boolean;
-  @Input() oldWeekly: Weekly;
+  @Input() oldWeekly: HistoryItem;
 
-  weekly: Weekly;
+  weekly: HistoryItem;
   results: number[] = [];
   labels: string[] = ['אימצתי!', 'לא אשתמש אבל אתה מלך'];
   colors = [{ backgroundColor: ['#2C83C9', '#FAC51D']}];
@@ -22,7 +23,7 @@ export class ResultsComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (!this.isHistoryMode) {
       this.subscriptions.push(
-        this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
+        this.dataService.getWordOfTheWeek().subscribe((weekly: HistoryItem) => {
           this.weekly = weekly;
           if (this.weekly) {
             this.results = [ this.weekly.like, this.weekly.dislike ]

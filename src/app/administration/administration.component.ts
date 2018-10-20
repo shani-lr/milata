@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Question } from '../models/question.model';
-
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
@@ -10,15 +9,18 @@ import { Question } from '../models/question.model';
 })
 export class AdministrationComponent implements OnInit, OnDestroy {
 
+  currentWeekly: Weekly;
   word = '';
   meaning = '';
+  options: {value: string}[] = [{value: ''}, {value: ''}, {value: ''}, {value: ''}];
+  correctOption = null;
   title = '';
   description = '';
   answer = '';
   questions = [];
   hasPublished = false;
-  answerIndex = -1;
 
+  answerIndex = -1;
   private subscriptions$ = [];
 
   constructor(private dataService: DataService,
@@ -31,14 +33,21 @@ export class AdministrationComponent implements OnInit, OnDestroy {
         questions => this.questions = questions.filter(q => !q.answer)
       )
     );
+    this.subscriptions$.push(
+      this.dataService.getWordOfTheWeek().subscribe(
+        (currentWord: Weekly) => this.currentWeekly = currentWord
+      )
+    );
   }
 
   onPublishWorkOfWeek() {
     this.spinner.show();
     this.subscriptions$.push(
-      this.dataService.updateWordOfWeek(this.word, this.meaning).subscribe(() => {
+      this.dataService.updateWordOfWeek(this.word, this.meaning, this.options.map(x => x.value), this.correctOption).subscribe(() => {
           this.word = '';
           this.meaning = '';
+          this.options = [{value: ''}, {value: ''}, {value: ''}, {value: ''}];
+          this.correctOption = null;
           this.hasPublished = true;
           this.spinner.hide();
         }
@@ -84,3 +93,5 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     )
   }
 }
+
+import { Weekly } from '../models/weekly';

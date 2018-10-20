@@ -12,14 +12,72 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="showOptionsButtons" class="row" style="margin-top: 2rem;">
+    <div class="col">
+      <button (click)="showOptions = true; showOptionsButtons = false;" class="btn btn-lg btn-primary" style="margin-left: 2rem;">
+        <div>
+          <i class="fas fa-question-circle"></i> נסה לנחש
+        </div>
+      </button>
+      <button (click)="showMeaning = true; showOptionsButtons = false;" class="btn btn-lg btn-warning">
+        <div>גלה לי <i class="far fa-dizzy"></i></div>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="showOptions">
+    <div *ngFor="let option of weekly.options" class="row" style="font-size: 1.5rem;">
+      <div class="col">
+        <label>
+          <input type="radio"
+                 name="option"
+                 [(ngModel)]="selectedOption"
+                 [value]="option">
+          {{ option }}
+        </label>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 2rem; margin-bottom: 2rem">
+      <div class="col">
+        <button (click)="chooseOption()" class="btn btn-lg btn-primary" style="margin-left: 2rem;">
+          <div style="font-size: 1.7rem">
+            בחר <i class="fas fa-hand-point-up"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="hasSelectedOption && isCorrect">
+    <div class="row" style="font-size: 2rem; margin-bottom: 1rem; color: mediumseagreen; font-weight: bold">
+      <div class="col">
+        תשובה נכונה!
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <img src="assets/happy.gif" class="img-fluid" style="max-width: 100%; height: auto; max-height: 200px">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="hasSelectedOption && !isCorrect">
+    <div class="row" style="font-size: 2rem; margin-bottom: 1rem; color: #ce2f2f; font-weight: bold">
+      <div class="col">
+        תשובה לא נכונה
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <img src="assets/sad.gif" class="img-fluid" style="max-width: 100%; height: auto; max-height: 200px">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showMeaning" class="row" style="margin-top: 2rem">
     <div class="col">
       <div>
         {{ weekly?.meaning }}
       </div>
     </div>
   </div>
-  <div *ngIf="!hasVoted" class="row" style="margin-top: 2rem;">
+  <div *ngIf="!hasVoted && showMeaning" class="row" style="margin-top: 2rem; margin-bottom: 2rem">
     <div class="col">
       <button (click)="vote(true)" class="btn btn-lg btn-primary" style="margin-left: 2rem;">
         <div style="font-size: 1.7rem">

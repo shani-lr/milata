@@ -1,4 +1,4 @@
-export interface Weekly {
+export interface HistoryItem {
   word: string;
   meaning: string;
   like: number;

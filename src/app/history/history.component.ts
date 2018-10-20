@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Weekly } from '../models/weekly.model';
+import { HistoryItem } from '../models/history-item.model';
 
 @Component({
   selector: 'app-history',
@@ -8,7 +8,7 @@ import { Weekly } from '../models/weekly.model';
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit, OnDestroy {
-  history: Weekly[];
+  history: HistoryItem[];
   weeklySelected = false;
   showResults = false;
   selectedWeeklyIndex: number;
@@ -19,7 +19,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.dataService.getHistory().subscribe((history: Weekly[]) => {
+      this.dataService.getHistory().subscribe((history: HistoryItem[]) => {
         this.history = history;
         console.log(this.history);
       }));

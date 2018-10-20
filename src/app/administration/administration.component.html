@@ -17,6 +17,11 @@
       מילת השבוע
     </div>
   </div>
+  <div class="row" style="margin-top: 2rem; margin-bottom: 1rem; font-weight: bold;">
+    <div class="col">
+      סטטיסטיקת ניחושים שבועית: ענו נכון: {{currentWeekly.correctGuesses}}. ענו לא נכון: {{currentWeekly.wrongGuesses}}
+    </div>
+  </div>
   <div class="row" style="margin-top: 2rem">
     <div class="col">
       <div class="input-group input-group-lg">
@@ -41,7 +46,44 @@
       </div>
     </div>
   </div>
-  <div class="row" style="margin-bottom: 4rem">
+  <div class="row" style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: bold; text-align: right">
+    <div class="col">
+      ניחושים:
+    </div>
+  </div>
+  <div *ngFor="let option of options; let i = index" class="row" style="margin-top: 0.2rem">
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" style="border-radius: 0">{{ i + 1 }}</span>
+        </div>
+        <input [(ngModel)]="options[i].value"
+               [name]="i"
+               type="text"
+               class="form-control"
+               aria-label="Large"
+               aria-describedby="inputGroup-sizing-default"
+               style="border-radius: 0">
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: bold; text-align: right">
+    <div class="col">
+      הניחוש הנכון:
+    </div>
+  </div>
+  <div class="row" style="margin-top: 0.2rem">
+    <div class="col" *ngFor="let option of options; let i = index">
+      <label>
+        <input type="radio"
+               name="option"
+               [(ngModel)]="correctOption"
+               [value]="option.value">
+        {{ i + 1 }}
+      </label>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 4rem; margin-top: 1rem">
     <div class="col">
       <div class="btn btn-primary" (click)="onPublishWorkOfWeek()">פרסם את מילת השבוע</div>
     </div>
