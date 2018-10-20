@@ -14,7 +14,7 @@ export class DataService {
   private questions$: AngularFirestoreDocument<{ questions: Question[] }>;
 
   constructor(private db: AngularFirestore) {
-    this.words$ = this.db.collection('app').doc<Words>('words');
+    this.words$ = this.db.collection('app').doc<Words>('words-test');
     this.funFacts$ = this.db.collection('app').doc('fun-facts');
     this.questions$ = this.db.collection('app').doc('questions');
   }
@@ -37,7 +37,7 @@ export class DataService {
 
   updateWordOfWeek(word: string, meaning: string) {
     const wordsRef$ =
-      this.db.firestore.collection('app').doc('words');
+      this.db.firestore.collection('app').doc('words-test');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
@@ -62,7 +62,7 @@ export class DataService {
 
   updateWordOfWeekVotes(like: boolean) {
     const wordsRef$ =
-      this.db.firestore.collection('app').doc('words');
+      this.db.firestore.collection('app').doc('words-test');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(
@@ -82,7 +82,7 @@ export class DataService {
 
   updateOldWordOfWeekVotes(weekly: Weekly, like: boolean) {
     const wordsRef$ =
-      this.db.firestore.collection('app').doc('words');
+      this.db.firestore.collection('app').doc('words-test');
 
     return Observable.from(this.db.firestore.runTransaction((transaction) => {
       return transaction.get(wordsRef$).then(

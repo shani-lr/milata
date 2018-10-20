@@ -8,7 +8,7 @@
   <div class="row" *ngIf="isSuccess" style="margin-top: 2rem">
     <div class="col">
       <div class="alert alert-success" role="alert">
-        שאלתך נשלחה בהצלחה.
+        הפעולה בוצעה בהצלחה!
       </div>
     </div>
   </div>
@@ -17,12 +17,6 @@
       <div class="alert alert-danger" role="alert">
         שאלתך לא נשלחה. אנא בדוק שהשאלה אינה ריקה.
       </div>
-    </div>
-  </div>
-  <div *ngFor="let question of questions" class="row text-right" style="margin-bottom: 1rem">
-    <div class="col">
-      <div style="font-weight: bold; font-size: 1.3rem; margin-bottom: 0.5rem">{{ question.question }}</div>
-      <div> {{ question.answer }}</div>
     </div>
   </div>
   <div *ngIf="!enableQuestionMode; else showQuestionInput" class="row">
@@ -58,5 +52,17 @@
         <div class="btn btn-success" (click)="onSendQuestion()">שלח</div>
       </div>
     </div>
+    <hr>
   </ng-template>
+  <div *ngFor="let question of questions" class="row text-right" style="margin-bottom: 1rem">
+    <div class="col">
+      <div style="font-weight: bold; font-size: 1.3rem; margin-bottom: 0.5rem">
+        <span>{{ question.question }}</span>
+        <span *ngIf="isAdmin">
+          <button class="btn btn-sm btn-link" (click)="onAnswerAgain(question)" style="color: grey; margin-right: 2rem">(ענה מחדש)</button>
+        </span>
+      </div>
+      <div> {{ question.answer }}</div>
+    </div>
+  </div>
 </div>

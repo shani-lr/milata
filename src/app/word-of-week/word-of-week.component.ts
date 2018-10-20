@@ -22,16 +22,19 @@ export class WordOfWeekComponent implements OnInit, OnDestroy  {
               private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
+    this.spinner.show();
     if (!this.isHistoryMode) {
       this.subscriptions.push(
         this.dataService.getWordOfTheWeek().subscribe((weekly: Weekly) => {
           this.weekly = weekly;
+          this.spinner.hide();
         })
       );
     } else {
       this.subscriptions.push(
         this.dataService.getHistory().subscribe((history: Weekly[]) => {
           this.weekly = history[this.oldWeeklyIndex];
+          this.spinner.hide();
         })
       );
     }

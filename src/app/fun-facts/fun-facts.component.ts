@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { FunFact } from '../models/fun-fact.model';
+import { FacebookService, InitParams } from 'ngx-facebook';
 
 @Component({
   selector: 'app-fun-facts',
@@ -8,11 +9,11 @@ import { FunFact } from '../models/fun-fact.model';
   styleUrls: ['./fun-facts.component.css']
 })
 export class FunFactsComponent implements OnInit {
-
   funFacts: FunFact[];
   private subscriptions = [];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit() {
     this.subscriptions.push(

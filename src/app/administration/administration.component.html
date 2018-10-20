@@ -1,9 +1,9 @@
 <div class="container">
   <ngx-spinner
-    bdColor = "rgba(51, 51, 51, 0.8)"
-    size = "large"
-    color = "#fff"
-    type = "ball-atom">
+    bdColor="rgba(51, 51, 51, 0.8)"
+    size="large"
+    color="#fff"
+    type="ball-atom">
   </ngx-spinner>
   <div class="row" *ngIf="hasPublished" style="margin-top: 2rem">
     <div class="col">
@@ -14,7 +14,7 @@
   </div>
   <div class="row" style="margin-top: 2rem; margin-bottom: 1rem; font-weight: bold; font-size: 2rem">
     <div class="col">
-מילת השבוע
+      מילת השבוע
     </div>
   </div>
   <div class="row" style="margin-top: 2rem">
@@ -24,7 +24,7 @@
           <span class="input-group-text" style="border-radius: 0">מילת השבוע</span>
         </div>
         <input [(ngModel)]="word"
-          type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+               type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                style="border-radius: 0">
       </div>
     </div>
@@ -46,10 +46,10 @@
       <div class="btn btn-primary" (click)="onPublishWorkOfWeek()">פרסם את מילת השבוע</div>
     </div>
   </div>
-<hr style="border: 1px dashed;">
+  <hr style="border: 1px dashed;">
   <div class="row" style="margin-top: 2rem; margin-bottom: 1rem; font-weight: bold; font-size: 2rem">
     <div class="col">
-הידעת
+      הידעת
     </div>
   </div>
   <div class="row" style="margin-top: 2rem">
@@ -87,15 +87,21 @@
       שאלות למענה
     </div>
   </div>
-  <div *ngFor="let question of questions; let i = index" class="row" style="text-align: right; margin-bottom: 1rem">
-    <div class="col d-inline-flex align-items-center">
-      <div style="padding: 1rem">{{question.question}}
-      <ng-container *ngIf="question.username">(מאת {{question.username}})</ng-container>
+  <div *ngFor="let question of questions; let i = index" style="text-align: right; margin-bottom: 1rem">
+    <div class="row">
+      <div class="col d-inline-flex align-items-center">
+        <div style="padding: 1rem 0 1rem 1rem">{{question.question}}
+          <ng-container *ngIf="question.username">(מאת {{question.username}})</ng-container>
+        </div>
+        <div *ngIf="i !== answerIndex">
+          <button class="btn btn-primary" (click)="answerIndex = i" style="margin-left: 1rem"><i
+            class="fas fa-comments"></i> ענה
+          </button>
+          <button class="btn btn-danger" (click)="onDelete(question)"><i class="fas fa-trash-alt"></i> מחק</button>
+        </div>
       </div>
-      <div *ngIf="i !== answerIndex">
-        <button class="btn btn-primary" (click)="answerIndex = i" style="margin-left: 1rem"><i class="fas fa-comments"></i> ענה</button>
-        <button class="btn btn-danger" (click)="onDelete(question)"><i class="fas fa-trash-alt"></i> מחק</button>
-      </div>
+    </div>
+    <div class="row">
       <div *ngIf="i === answerIndex" class="col">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -104,7 +110,9 @@
           <input [(ngModel)]="question.answer"
                  type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-default"
                  style="border-radius: 0">
-          <button class="btn btn-primary" (click)="onAnswer(question)" style="margin-right: 1rem"><i class="fas fa-comments"></i> ענה</button>
+          <button class="btn btn-primary" (click)="onAnswer(question)" style="margin-right: 1rem"><i
+            class="fas fa-comments"></i> ענה
+          </button>
         </div>
       </div>
     </div>

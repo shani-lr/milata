@@ -21,6 +21,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.dataService.getHistory().subscribe((history: Weekly[]) => {
         this.history = history;
+        console.log(this.history);
       }));
   }
 

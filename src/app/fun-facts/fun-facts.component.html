@@ -1,8 +1,15 @@
 <div class="container">
-  <div *ngFor="let fact of funFacts" class="row text-right" style="margin-bottom: 2rem">
+  <div *ngFor="let fact of funFacts; let i = index"
+       class="row text-right"
+       style="margin-bottom: 2rem">
     <div class="col">
-      <div style="font-weight: bold; font-size: 1.3rem; margin-bottom: 0.5rem">{{ fact.title }}</div>
-      <div> {{ fact.description }}</div>
+      <div style="font-weight: bold; font-size: 1.3rem; margin-bottom: 0.5rem">
+        {{ fact.title }}
+      </div>
+      <div>{{ fact.description }}</div>
+      <div>
+        <fb-like [href]="'https://milata-yom.firebaseapp.com/fun-facts/' + i"></fb-like>
+      </div>
     </div>
   </div>
 </div>

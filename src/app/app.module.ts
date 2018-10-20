@@ -22,6 +22,7 @@ import { ResultsComponent } from './results/results.component';
 import { HistoryComponent } from './history/history.component';
 import { FunFactsComponent } from './fun-facts/fun-facts.component';
 import { QuestionsComponent } from './questions/questions.component';
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { QuestionsComponent } from './questions/questions.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     NgxSpinnerModule,
-    ChartsModule
+    ChartsModule,
+    FacebookModule.forRoot()
   ],
   providers: [
     DataService,
